@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./routes/Root";
+import MentorForm from "./routes/MentorForm";
+import MentorDashboard from "./routes/MentorDashboard";
+import { ToastContainer } from 'react-toastify';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <Root />,
+      children: [
+        {
+          path: "mentorForm",
+          element: <MentorForm />,
+        },
+        {
+          path: "mentorDashboard",
+          element: <MentorDashboard />,
+        },
+      ],
+    },
+    // {
+    //   path: "signin",
+    //   element: <Signin />,
+    // },
+    // {
+    //   path: "signup",
+    //   element: <Signup />,
+    // },
+  ]);
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;
