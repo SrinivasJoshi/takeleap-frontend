@@ -85,7 +85,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open} sx={{ backgroundColor: "#683cb4" }}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: "#673AB7" }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box display={"flex"} alignItems={"center"}>
             <IconButton
@@ -97,16 +97,38 @@ export default function PersistentDrawerLeft() {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="h6" noWrap component="div">
-              Takeleap
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              style={{
+                fontFamily: "Source Serif Pro, serif",
+                fontWeight: "bold",
+              }}
+            >
+              takeleap.
             </Typography>
           </Box>
+          {/* <Button variant="outlined" startIcon={<PersonIcon />} sx={{color:'white',textTransform:'none',bgcolor:"#673AB7"}}>
+            Username
+          </Button> */}
           <Button
-            size="large"
-            className="mt-3"
-            style={{ backgroundColor: "white", color: "violet" }}
+            variant="outlined"
+            startIcon={<PersonIcon />}
+            sx={{
+              color: "#673AB7", // Text color
+              textTransform: "none",
+              backgroundColor: "white", // Background color
+
+              // Hover styles
+              "&:hover": {
+                backgroundColor: "#fff", // Keep background color white on hover
+                borderColor: "#673AB7", // Keep border color
+                color: "#673AB7", // Keep text color
+              },
+            }}
           >
-            UserName
+            Username
           </Button>
         </Toolbar>
       </AppBar>
@@ -117,7 +139,7 @@ export default function PersistentDrawerLeft() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
-            backgroundColor: "#683cb4",
+            backgroundColor: "#673AB7",
           },
         }}
         variant="persistent"
@@ -144,13 +166,13 @@ export default function PersistentDrawerLeft() {
             }}
             disablePadding
             sx={{
-              color: selectedRoute === "Dashboard" ? "#683cb4" : "#fff", // Set text color based on selected route
+              color: selectedRoute === "Dashboard" ? "#673AB7" : "#fff", // Set text color based on selected route
               backgroundColor:
-                selectedRoute === "Dashboard" ? "#fff" : "#683cb4", // Set background color based on selected route
+                selectedRoute === "Dashboard" ? "#fff" : "#673AB7", // Set background color based on selected route
               "&:hover": {
                 // Maintain hover styles
                 backgroundColor: "#fff",
-                color: "#683cb4",
+                color: "#673AB7",
               },
             }}
           >
@@ -170,11 +192,11 @@ export default function PersistentDrawerLeft() {
             }}
             disablePadding
             sx={{
-              color: selectedRoute === "Profile" ? "#683cb4" : "#fff",
-              backgroundColor: selectedRoute === "Profile" ? "#fff" : "#683cb4",
+              color: selectedRoute === "Profile" ? "#673AB7" : "#fff",
+              backgroundColor: selectedRoute === "Profile" ? "#fff" : "#673AB7",
               "&:hover": {
                 backgroundColor: "#fff",
-                color: "#683cb4",
+                color: "#673AB7",
               },
             }}
           >

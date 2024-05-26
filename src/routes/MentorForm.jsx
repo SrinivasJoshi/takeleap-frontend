@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 import {
@@ -18,6 +18,8 @@ import {
 } from "@mui/material";
 import { postMentorData } from "../data/postData";
 import { toast } from "react-toastify";
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from '@mui/material/IconButton';
 
 function MentorForm() {
   const {
@@ -35,6 +37,7 @@ function MentorForm() {
     control,
     name: "publications",
   });
+
   const {
     fields: experienceFields,
     append: appendExperience,
@@ -77,11 +80,33 @@ function MentorForm() {
   const genderValue = watch("gender");
   const statusValue = watch("currentStatus");
 
+
+  useEffect(() => {
+    if (publicationFields.length === 0) {
+      appendPublication({ title: "", journalName: "", link: "" });
+    }
+
+    // Append an empty professional experience if the experience list is empty
+    if (experienceFields.length === 0) {
+      appendExperience({ title: "",
+      startDate: "",
+      endDate: "",
+      companyName: "",
+      description: "", });
+    }
+  }, []);
+
   const stepContent = (step) => {
     switch (step) {
       case 0:
         return (
-          <Grid width={"60%"} container spacing={2} justifyContent="">
+          <Grid
+            container
+            sx={{
+              width: { sm: "80%", lg: "70%" },
+            }}
+            spacing={{ xs: 4, sm: 2 }}
+          >
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -103,7 +128,9 @@ function MentorForm() {
                     <Select {...field} label="Gender">
                       <MenuItem value="Male">Male</MenuItem>
                       <MenuItem value="Female">Female</MenuItem>
-                      <MenuItem value="Other">Other</MenuItem>
+                      <MenuItem value="Prefer Not to Say">
+                        Prefer Not to Say
+                      </MenuItem>
                     </Select>
                   )}
                 />
@@ -112,6 +139,7 @@ function MentorForm() {
                 )}
               </FormControl>
             </Grid>
+
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -123,6 +151,7 @@ function MentorForm() {
                 helperText={errors.currentLocation?.message}
               />
             </Grid>
+
             <Grid item xs={12} sm={6}>
               <FormControl fullWidth error={!!errors.currentStatus}>
                 <InputLabel>Current Status</InputLabel>
@@ -158,10 +187,25 @@ function MentorForm() {
                 helperText={errors.classRank?.message}
               />
             </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                fullWidth
+                {...register("contactNumber", {
+                  required: "Whatsapp Number is required",
+                })}
+                label="Whatsapp Number"
+                placeholder="Please add country code, +91"
+                error={!!errors.contactNumber}
+                helperText={errors.contactNumber?.message}
+              />
+            </Grid>
+
             <Divider />
-            <Typography width={"100%"} sx={{ mt: 3, px: 2 }}>
-              GRE Score
-            </Typography>
+            <Grid item xs={12}>
+              <Typography sx={{ mt: 5, fontWeight: "medium" }}>
+                GRE Score
+              </Typography>
+            </Grid>
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -199,10 +243,11 @@ function MentorForm() {
               />
             </Grid>
             <Divider />
-
-            <Typography width={"100%"} sx={{ mt: 3, px: 2 }}>
-              TOEFL Score
-            </Typography>
+            <Grid item xs={12}>
+              <Typography width={"100%"} sx={{ mt: 5, fontWeight: "medium" }}>
+                TOEFL Score
+              </Typography>
+            </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -256,163 +301,235 @@ function MentorForm() {
         );
       case 1:
         return (
-          <Box sx={{ "& .MuiTextField-root": { m: 1, width: "70ch" } }}>
-            <TextField
-              {...register("underGradInstitution", {
-                required: "Undergrad Institution is required",
-              })}
-              label="Undergrad Institution"
-              error={!!errors.underGradInstitution}
-              helperText={errors.underGradInstitution?.message}
-              fullWidth
-              sx={{ mb: 1 }} // Margin bottom for spacing
-            />
-            <TextField
-              {...register("underGradDegree", {
-                required: "Undergrad Degree is required",
-              })}
-              label="Undergrad Degree"
-              error={!!errors.underGradDegree}
-              helperText={errors.underGradDegree?.message}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              {...register("undergraduateGPA", {
-                required: "Undergraduate GPA is required",
-              })}
-              label="Undergraduate GPA"
-              type="number"
-              error={!!errors.undergraduateGPA}
-              helperText={errors.undergraduateGPA?.message}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              {...register("postGraduateInstitution", {
-                required: "Post Graduate Institution is required",
-              })}
-              label="Post Graduate Institution"
-              error={!!errors.postGraduateInstitution}
-              helperText={errors.postGraduateInstitution?.message}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              {...register("postGraduateDegree", {
-                required: "Post Graduate Degree is required",
-              })}
-              label="Post Graduate Degree"
-              error={!!errors.postGraduateDegree}
-              helperText={errors.postGraduateDegree?.message}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              {...register("programName", {
-                required: "Program Name is required",
-              })}
-              label="Program Name"
-              error={!!errors.undergraduateGPA}
-              helperText={errors.programName?.message}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-            <TextField
-              {...register("universityName", {
-                required: "University Name is required",
-              })}
-              label="University Name"
-              error={!!errors.universityName}
-              helperText={errors.universityName?.message}
-              fullWidth
-              sx={{ mb: 1 }}
-            />
-          </Box>
+          <Grid
+            container
+            sx={{
+              width: { sm: "80%", lg: "70%" },
+            }}
+            spacing={{ xs: 4, sm: 2 }}
+          >
+            <Grid item xs={12}>
+              <Typography sx={{ mt: 5, fontWeight: "medium" }}>
+                Undergraduate Information
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("underGradInstitution", {
+                  required: "Undergrad Institution is required",
+                })}
+                label="Undergrad Institution"
+                error={!!errors.underGradInstitution}
+                helperText={errors.underGradInstitution?.message}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("underGradDegree", {
+                  required: "Undergrad Degree is required",
+                })}
+                label="Undergrad Degree"
+                error={!!errors.underGradDegree}
+                helperText={errors.underGradDegree?.message}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("undergraduateGPA", {
+                  required: "Undergraduate GPA is required",
+                })}
+                type="number"
+                label="Undergraduate GPA"
+                error={!!errors.undergraduateGPA}
+                helperText={errors.undergraduateGPA?.message}
+                fullWidth
+                placeholder="GPA out of 4"
+                inputProps={{ step: 0.1, min: 0.1, max: 4.0 }}
+              />
+            </Grid>
+
+            <Grid item xs={12}>
+              <Typography sx={{ mt: 5, fontWeight: "medium" }}>
+                Postgraduate Information
+              </Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("postGraduateInstitution", {
+                  required: "Post Graduate Institution is required",
+                })}
+                label="Post Graduate Institution"
+                error={!!errors.postGraduateInstitution}
+                helperText={errors.postGraduateInstitution?.message}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("postGraduateDegree", {
+                  required: "Post Graduate Degree is required",
+                })}
+                label="Post Graduate Degree"
+                error={!!errors.postGraduateDegree}
+                helperText={errors.postGraduateDegree?.message}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("programName", {
+                  required: "Program Name is required",
+                })}
+                label="Program Name"
+                error={!!errors.programName}
+                helperText={errors.programName?.message}
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                {...register("universityName", {
+                  required: "University Name is required",
+                })}
+                label="University Name"
+                error={!!errors.universityName}
+                helperText={errors.universityName?.message}
+                fullWidth
+              />
+            </Grid>
+          </Grid>
         );
       case 2:
         return (
-          <Box>
+          <Grid
+            container
+            alignItems="center"
+            spacing={{ xs: 4, sm: 2 }}
+            sx={{
+              width: { sm: "80%", lg: "70%" },
+            }}
+          >
             {publicationFields.map((field, index) => (
-              <Box
-                key={field.id}
-                sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-              >
-                <TextField
-                  {...register(`publications[${index}].title`)}
-                  label="Publication Title"
-                />
-                <TextField
-                  {...register(`publications[${index}].journalName`)}
-                  label="Journal Name"
-                />
-                <TextField
-                  {...register(`publications[${index}].link`)}
-                  label="Link"
-                />
-                <Button onClick={() => removePublication(index)}>Remove</Button>
-              </Box>
+              <Grid item xs={12} key={field.id} sx={{ml:{lg:10,sm:0}}}>
+                <Grid container spacing={2} alignItems="center" justifyContent="center">
+                  <Grid item xs={11} sm={5} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`publications[${index}].title`)}
+                      label="Publication Title"
+                    />
+                  </Grid>
+                  <Grid item xs={11} sm={5} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`publications[${index}].journalName`)}
+                      label="Journal Name"
+                    />
+                  </Grid>
+                  <Grid item xs={11} sm={5} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`publications[${index}].link`)}
+                      label="DOI"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={1}>
+                    <IconButton aria-label="delete" onClick={() => removePublication(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Grid>
             ))}
-            <Button
-              onClick={() =>
-                appendPublication({ title: "", journalName: "", link: "" })
-              }
-            >
-              Add Publication
-            </Button>
-          </Box>
+            <Grid item xs={12} sx={{ mt: 5 }} display="flex" justifyContent="center">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => appendPublication({ title: "", journalName: "", link: "" })}
+              >
+                Add Publication
+              </Button>
+            </Grid>
+          </Grid>
         );
+        
       case 3:
         return (
-          <Box>
+          <Grid
+            container
+            alignItems="center"
+            spacing={{ xs: 4, sm: 2 }}
+            sx={{
+              width: { sm: "80%", lg: "70%" },
+              margin: 'auto'  // Center the grid
+            }}
+          >
             {experienceFields.map((field, index) => (
-              <Box
-                key={field.id}
-                sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}
-              >
-                <TextField
-                  {...register(`professionalExperiences[${index}].title`)}
-                  label="Job Title"
-                />
-
-                <TextField
-                  {...register(`professionalExperiences[${index}].startDate`)}
-                  label="Start Date"
-                  type="date"
-                  InputLabelProps={{ shrink: true }}
-                />
-                <TextField
-                  {...register(`professionalExperiences[${index}].endDate`)}
-                  label="End Date"
-                  type="date"
-                  InputLabelProps={{ shrink: true }}
-                />
-                <TextField
-                  {...register(`professionalExperiences[${index}].companyName`)}
-                  label="Company Name"
-                />
-                <TextField
-                  {...register(`professionalExperiences[${index}].description`)}
-                  label="Description"
-                />
-                <Button onClick={() => removeExperience(index)}>Remove</Button>
-              </Box>
+              <Grid item xs={12} key={field.id}>
+                <Grid container spacing={2} alignItems="center" justifyContent="center">
+                  <Grid item xs={12} sm={6} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`professionalExperiences[${index}].title`)}
+                      label="Job Title"
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={3} md={2}>
+                    <TextField
+                      fullWidth
+                      {...register(`professionalExperiences[${index}].startDate`)}
+                      label="Start Date"
+                      type="date"
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={3} md={2}>
+                    <TextField
+                      fullWidth
+                      {...register(`professionalExperiences[${index}].endDate`)}
+                      label="End Date"
+                      type="date"
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`professionalExperiences[${index}].companyName`)}
+                      label="Company Name"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`professionalExperiences[${index}].description`)}
+                      label="Description"
+                      multiline
+                      rows={4}  
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={1} md={1}>
+                    <IconButton aria-label="delete" onClick={() => removeExperience(index)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </Grid>
+                </Grid>
+              </Grid>
             ))}
-            <Button
-              onClick={() =>
-                appendExperience({
-                  title: "",
-                  startDate: "",
-                  endDate: "",
-                  companyName: "",
-                  description: "",
-                })
-              }
-            >
-              Add Experience
-            </Button>
-          </Box>
+            <Grid item xs={12} sx={{ mt: 5 }} display="flex" justifyContent="center">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={() => appendExperience({ title: "", startDate: "", endDate: "", companyName: "", description: "" })}
+              >
+                Add Experience
+              </Button>
+            </Grid>
+          </Grid>
         );
+        
       default:
         return null;
     }
@@ -420,9 +537,11 @@ function MentorForm() {
 
   return (
     <Box sx={{ width: "100%" }}>
-      <Typography variant="h5" sx={{ textAlign: "center", width: "100%" }}>
-        {" "}
-        Mentor OnBoarding{" "}
+      <Typography
+        variant="h5"
+        sx={{ textAlign: "center", width: "100%", fontWeight: "medium" }}
+      >
+        Mentor Onboarding
       </Typography>
       <Stepper activeStep={activeStep} alternativeLabel sx={{ mt: 3 }}>
         {steps.map((label) => (
@@ -443,6 +562,7 @@ function MentorForm() {
           {stepContent(activeStep)}
           <Box sx={{ display: "flex", mt: 3 }}>
             <Button
+              variant="outlined"
               disabled={activeStep === 0}
               onClick={handleBack}
               sx={{ m: 1 }}
@@ -450,12 +570,24 @@ function MentorForm() {
               Back
             </Button>
             {activeStep === 3 && (
-              <Button type="submit" sx={{ m: 1 }}>
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  m: 1,
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: "#fff", // Keep background color white on hover
+                    borderColor: "#673AB7", // Keep border color
+                    color: "#673AB7", // Keep text color
+                  },
+                }}
+              >
                 Submit
               </Button>
             )}
             {activeStep !== 3 && (
-              <Button variant="contained" onClick={handleNext} sx={{ m: 1 }}>
+              <Button variant="outlined" onClick={handleNext} sx={{ m: 1 }}>
                 Next
               </Button>
             )}

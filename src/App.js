@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import MentorForm from "./routes/MentorForm";
 import MentorDashboard from "./routes/MentorDashboard";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 
 function App() {
   const router = createBrowserRouter([

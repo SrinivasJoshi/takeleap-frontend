@@ -7,10 +7,10 @@ export const postMentorData = async (data) => {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({mentorData:data}),
+      body: JSON.stringify({ mentorData: data }),
     });
     const response = _response.json();
-    return response
+    return response;
   } catch (error) {
     console.log(error);
   }
