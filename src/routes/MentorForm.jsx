@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   Button,
   TextField,
@@ -16,7 +18,7 @@ import {
   Divider,
 } from "@mui/material";
 import { postMentorData } from "../data/postData";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 
 function MentorForm() {
   const {
@@ -60,17 +62,16 @@ function MentorForm() {
   };
 
   const onSubmit = async (data) => {
-    if(activeStep===3){
-        const response = await postMentorData(data);
-        if(response.error){
-            toast.error(response.error);
-        }
-        else{
-            toast.success('Form submitted successfully !');
-        }
+    if (activeStep === 3) {
+      const response = await postMentorData(data);
+      if (response.error) {
+        toast.error(response.error);
+      } else {
+        toast.success("Form submitted successfully !");
+      }
     }
     // redirect to dashboard
-    // loader 
+    // loader
   };
 
   // Watching fields to persist values
@@ -159,7 +160,9 @@ function MentorForm() {
               />
             </Grid>
             <Divider />
-            <Typography width={'100%'} sx={{mt:3,px:2}}>GRE Score</Typography>
+            <Typography width={"100%"} sx={{ mt: 3, px: 2 }}>
+              GRE Score
+            </Typography>
             <Grid item xs={12} sm={4}>
               <TextField
                 fullWidth
@@ -198,7 +201,9 @@ function MentorForm() {
             </Grid>
             <Divider />
 
-            <Typography width={'100%'} sx={{mt:3,px:2}}>TOEFL Score</Typography>
+            <Typography width={"100%"} sx={{ mt: 3, px: 2 }}>
+              TOEFL Score
+            </Typography>
             <Grid item xs={12} sm={6}>
               <TextField
                 fullWidth
@@ -240,7 +245,7 @@ function MentorForm() {
               <TextField
                 fullWidth
                 {...register("toeflWriting", {
-                    required: "TOEFL Writing is required",
+                  required: "TOEFL Writing is required",
                 })}
                 type="number"
                 label="Writing"
@@ -248,12 +253,11 @@ function MentorForm() {
                 helperText={errors.toeflWriting?.message}
               />
             </Grid>
-
           </Grid>
         );
       case 1:
         return (
-          <Box sx={{ "& .MuiTextField-root": { m: 1, width: "25ch" } }}>
+          <Box sx={{ "& .MuiTextField-root": { m: 1, width: "70ch" } }}>
             <TextField
               {...register("underGradInstitution", {
                 required: "Undergrad Institution is required",
@@ -261,6 +265,8 @@ function MentorForm() {
               label="Undergrad Institution"
               error={!!errors.underGradInstitution}
               helperText={errors.underGradInstitution?.message}
+              fullWidth
+              sx={{ mb: 1 }} // Margin bottom for spacing
             />
             <TextField
               {...register("underGradDegree", {
@@ -269,6 +275,8 @@ function MentorForm() {
               label="Undergrad Degree"
               error={!!errors.underGradDegree}
               helperText={errors.underGradDegree?.message}
+              fullWidth
+              sx={{ mb: 1 }}
             />
             <TextField
               {...register("undergraduateGPA", {
@@ -278,8 +286,9 @@ function MentorForm() {
               type="number"
               error={!!errors.undergraduateGPA}
               helperText={errors.undergraduateGPA?.message}
+              fullWidth
+              sx={{ mb: 1 }}
             />
-
             <TextField
               {...register("postGraduateInstitution", {
                 required: "Post Graduate Institution is required",
@@ -287,6 +296,8 @@ function MentorForm() {
               label="Post Graduate Institution"
               error={!!errors.postGraduateInstitution}
               helperText={errors.postGraduateInstitution?.message}
+              fullWidth
+              sx={{ mb: 1 }}
             />
             <TextField
               {...register("postGraduateDegree", {
@@ -295,14 +306,18 @@ function MentorForm() {
               label="Post Graduate Degree"
               error={!!errors.postGraduateDegree}
               helperText={errors.postGraduateDegree?.message}
+              fullWidth
+              sx={{ mb: 1 }}
             />
             <TextField
               {...register("programName", {
                 required: "Program Name is required",
               })}
               label="Program Name"
-              error={!!errors.programName}
+              error={!!errors.undergraduateGPA}
               helperText={errors.programName?.message}
+              fullWidth
+              sx={{ mb: 1 }}
             />
             <TextField
               {...register("universityName", {
@@ -311,6 +326,8 @@ function MentorForm() {
               label="University Name"
               error={!!errors.universityName}
               helperText={errors.universityName?.message}
+              fullWidth
+              sx={{ mb: 1 }}
             />
           </Box>
         );
@@ -358,15 +375,18 @@ function MentorForm() {
                   {...register(`professionalExperiences[${index}].title`)}
                   label="Job Title"
                 />
+
                 <TextField
                   {...register(`professionalExperiences[${index}].startDate`)}
                   label="Start Date"
                   type="date"
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   {...register(`professionalExperiences[${index}].endDate`)}
                   label="End Date"
                   type="date"
+                  InputLabelProps={{ shrink: true }}
                 />
                 <TextField
                   {...register(`professionalExperiences[${index}].companyName`)}
@@ -430,9 +450,11 @@ function MentorForm() {
             >
               Back
             </Button>
-            {activeStep === 3 && <Button type="submit" sx={{ m: 1 }}>
+            {activeStep === 3 && (
+              <Button type="submit" sx={{ m: 1 }}>
                 Submit
-              </Button>}
+              </Button>
+            )}
             {activeStep !== 3 && (
               <Button variant="contained" onClick={handleNext} sx={{ m: 1 }}>
                 Next
