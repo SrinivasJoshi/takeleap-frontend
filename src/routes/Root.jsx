@@ -19,6 +19,7 @@ import ListItemText from "@mui/material/ListItemText";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import PersonIcon from "@mui/icons-material/Person";
 import { Outlet, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -70,6 +71,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function PersistentDrawerLeft() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+  const [selectedRoute, setSelectedRoute] = React.useState(null);
   const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
@@ -83,7 +85,7 @@ export default function PersistentDrawerLeft() {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={open} sx={{ backgroundColor: "#683cb4" }}>
         <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Box display={"flex"} alignItems={"center"}>
             <IconButton
@@ -99,9 +101,13 @@ export default function PersistentDrawerLeft() {
               Takeleap
             </Typography>
           </Box>
-          <Typography variant="h6" noWrap component="div">
+          <Button
+            size="large"
+            className="mt-3"
+            style={{ backgroundColor: "white", color: "violet" }}
+          >
             UserName
-          </Typography>
+          </Button>
         </Toolbar>
       </AppBar>
       <Drawer
@@ -111,6 +117,7 @@ export default function PersistentDrawerLeft() {
           "& .MuiDrawer-paper": {
             width: drawerWidth,
             boxSizing: "border-box",
+            backgroundColor: "#683cb4",
           },
         }}
         variant="persistent"
@@ -130,11 +137,25 @@ export default function PersistentDrawerLeft() {
         <List>
           <ListItem
             key={"Dashboard"}
-            onClick={() => navigate("/mentorDashboard")}
+            // onClick={() => navigate("/mentorDashboard")}
+            onClick={() => {
+              navigate("/mentorDashboard");
+              setSelectedRoute("Dashboard"); // Update selected route on click
+            }}
             disablePadding
+            sx={{
+              color: selectedRoute === "Dashboard" ? "#683cb4" : "#fff", // Set text color based on selected route
+              backgroundColor:
+                selectedRoute === "Dashboard" ? "#fff" : "#683cb4", // Set background color based on selected route
+              "&:hover": {
+                // Maintain hover styles
+                backgroundColor: "#fff",
+                color: "#683cb4",
+              },
+            }}
           >
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon sx={{ color: "inherit" }}>
                 <DashboardIcon />
               </ListItemIcon>
               <ListItemText primary={"Dashboard"} />
@@ -143,11 +164,22 @@ export default function PersistentDrawerLeft() {
 
           <ListItem
             key={"Profile"}
-            onClick={() => navigate("/mentorForm")}
+            onClick={() => {
+              navigate("/mentorForm");
+              setSelectedRoute("Profile"); // Update selected route on click
+            }}
             disablePadding
+            sx={{
+              color: selectedRoute === "Profile" ? "#683cb4" : "#fff",
+              backgroundColor: selectedRoute === "Profile" ? "#fff" : "#683cb4",
+              "&:hover": {
+                backgroundColor: "#fff",
+                color: "#683cb4",
+              },
+            }}
           >
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon sx={{ color: "inherit" }}>
                 <PersonIcon />
               </ListItemIcon>
               <ListItemText primary={"Profile"} />
