@@ -1,9 +1,15 @@
 import { SignUp } from "@clerk/clerk-react";
+import { Box } from "@mui/material";
 
 export default function SignUpPage() {
   return (
-    <div className="w-full flex justify-center items-center h-screen">
-      <SignUp />
-    </div>
+    <Box
+      display="flex"
+      justifyContent={"center"}
+      alignItems={"center"}
+      height={"97vh"}
+    >
+      <SignUp path="/signup" forceRedirectUrl={"/mentorForm"} />
+    </Box>
   );
 }

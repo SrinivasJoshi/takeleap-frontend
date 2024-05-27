@@ -5,7 +5,12 @@ import App from "./App";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { ClerkProvider } from "@clerk/clerk-react";
 
+const PUBLISHABLE_KEY = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
 const theme = createTheme({
   typography: {
     fontFamily: ["Montserrat", "sans-serif"].join(","),
@@ -19,15 +24,12 @@ const theme = createTheme({
     MuiStepIcon: {
       styleOverrides: {
         root: {
-          // Color of the numbers inside the step icons
-          color: "#673AB7", // Light teal
+          color: "#673AB7",
           "&.Mui-active": {
-            // Active step icon color
-            color: "#673AB7", // Darker teal
+            color: "#673AB7",
           },
           "&.Mui-completed": {
-            // Completed step icon color
-            color: "#673AB7", // Dark teal
+            color: "#673AB7",
           },
         },
       },
@@ -44,7 +46,8 @@ const theme = createTheme({
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-    <ThemeProvider theme={theme}>
+  <ThemeProvider theme={theme}>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
       <App />
       <ToastContainer
         position="top-right"
@@ -58,7 +61,8 @@ root.render(
         pauseOnHover
         theme="light"
       />
-    </ThemeProvider>
+    </ClerkProvider>
+  </ThemeProvider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

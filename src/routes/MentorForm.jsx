@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 
 import {
@@ -18,8 +18,8 @@ import {
 } from "@mui/material";
 import { postMentorData } from "../data/postData";
 import { toast } from "react-toastify";
-import DeleteIcon from '@mui/icons-material/Delete';
-import IconButton from '@mui/material/IconButton';
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
 function MentorForm() {
   const {
@@ -80,7 +80,6 @@ function MentorForm() {
   const genderValue = watch("gender");
   const statusValue = watch("currentStatus");
 
-
   useEffect(() => {
     if (publicationFields.length === 0) {
       appendPublication({ title: "", journalName: "", link: "" });
@@ -88,11 +87,13 @@ function MentorForm() {
 
     // Append an empty professional experience if the experience list is empty
     if (experienceFields.length === 0) {
-      appendExperience({ title: "",
-      startDate: "",
-      endDate: "",
-      companyName: "",
-      description: "", });
+      appendExperience({
+        title: "",
+        startDate: "",
+        endDate: "",
+        companyName: "",
+        description: "",
+      });
     }
   }, []);
 
@@ -412,8 +413,13 @@ function MentorForm() {
             }}
           >
             {publicationFields.map((field, index) => (
-              <Grid item xs={12} key={field.id} sx={{ml:{lg:10,sm:0}}}>
-                <Grid container spacing={2} alignItems="center" justifyContent="center">
+              <Grid item xs={12} key={field.id} sx={{ ml: { lg: 10, sm: 0 } }}>
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  justifyContent="center"
+                >
                   <Grid item xs={11} sm={5} md={3}>
                     <TextField
                       fullWidth
@@ -436,25 +442,36 @@ function MentorForm() {
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={1}>
-                    <IconButton aria-label="delete" onClick={() => removePublication(index)}>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => removePublication(index)}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </Grid>
                 </Grid>
               </Grid>
             ))}
-            <Grid item xs={12} sx={{ mt: 5 }} display="flex" justifyContent="center">
+            <Grid
+              item
+              xs={12}
+              sx={{ mt: 5 }}
+              display="flex"
+              justifyContent="center"
+            >
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => appendPublication({ title: "", journalName: "", link: "" })}
+                onClick={() =>
+                  appendPublication({ title: "", journalName: "", link: "" })
+                }
               >
                 Add Publication
               </Button>
             </Grid>
           </Grid>
         );
-        
+
       case 3:
         return (
           <Grid
@@ -463,73 +480,106 @@ function MentorForm() {
             spacing={{ xs: 4, sm: 2 }}
             sx={{
               width: { sm: "80%", lg: "70%" },
-              margin: 'auto'  // Center the grid
             }}
           >
             {experienceFields.map((field, index) => (
               <Grid item xs={12} key={field.id}>
-                <Grid container spacing={2} alignItems="center" justifyContent="center">
-                  <Grid item xs={12} sm={6} md={3}>
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  border={1}
+                  borderColor={"#dddddd"}
+                  borderRadius={2}
+                  pb={2}
+                  pr={2}
+                  my={1}
+                >
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
                       {...register(`professionalExperiences[${index}].title`)}
                       label="Job Title"
                     />
                   </Grid>
-                  <Grid item xs={6} sm={3} md={2}>
+                  <Grid item xs={12} sm={6}>
                     <TextField
                       fullWidth
-                      {...register(`professionalExperiences[${index}].startDate`)}
+                      {...register(
+                        `professionalExperiences[${index}].companyName`,
+                      )}
+                      label="Company Name"
+                    />
+                  </Grid>
+                  <Grid item xs={6} sm={3} md={4}>
+                    <TextField
+                      fullWidth
+                      {...register(
+                        `professionalExperiences[${index}].startDate`,
+                      )}
                       label="Start Date"
                       type="date"
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
-                  <Grid item xs={6} sm={3} md={2}>
+                  <Grid item xs={6} sm={3} md={4}>
                     <TextField
                       fullWidth
                       {...register(`professionalExperiences[${index}].endDate`)}
-                      label="End Date"
+                      label="End Date(Leave empty if currently working)"
                       type="date"
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
+                  
+                  <Grid item xs={12} sm={6} md={11}>
                     <TextField
                       fullWidth
-                      {...register(`professionalExperiences[${index}].companyName`)}
-                      label="Company Name"
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6} md={3}>
-                    <TextField
-                      fullWidth
-                      {...register(`professionalExperiences[${index}].description`)}
+                      {...register(
+                        `professionalExperiences[${index}].description`,
+                      )}
                       label="Description"
                       multiline
-                      rows={4}  
+                      rows={4}
                     />
                   </Grid>
                   <Grid item xs={12} sm={1} md={1}>
-                    <IconButton aria-label="delete" onClick={() => removeExperience(index)}>
+                    <IconButton
+                      aria-label="delete"
+                      onClick={() => removeExperience(index)}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </Grid>
                 </Grid>
               </Grid>
             ))}
-            <Grid item xs={12} sx={{ mt: 5 }} display="flex" justifyContent="center">
+            <Grid
+              item
+              xs={12}
+              sx={{ mt: 5 }}
+              display="flex"
+              justifyContent="center"
+            >
               <Button
                 variant="contained"
                 color="primary"
-                onClick={() => appendExperience({ title: "", startDate: "", endDate: "", companyName: "", description: "" })}
+                onClick={() =>
+                  appendExperience({
+                    title: "",
+                    startDate: "",
+                    endDate: "",
+                    companyName: "",
+                    description: "",
+                  })
+                }
               >
                 Add Experience
               </Button>
             </Grid>
           </Grid>
         );
-        
+
       default:
         return null;
     }

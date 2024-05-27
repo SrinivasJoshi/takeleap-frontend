@@ -2,7 +2,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root from "./routes/Root";
 import MentorForm from "./routes/MentorForm";
 import MentorDashboard from "./routes/MentorDashboard";
-import { ToastContainer } from "react-toastify";
+import SignUpPage from "./routes/Signup";
+import SignInPage from "./routes/Signin";
+import HomePage from "./routes/HomePage";
 
 function App() {
   const router = createBrowserRouter([
@@ -10,6 +12,10 @@ function App() {
       path: "/",
       element: <Root />,
       children: [
+        {
+          path: "/",
+          element: <HomePage />,
+        },
         {
           path: "mentorForm",
           element: <MentorForm />,
@@ -20,14 +26,14 @@ function App() {
         },
       ],
     },
-    // {
-    //   path: "signin",
-    //   element: <Signin />,
-    // },
-    // {
-    //   path: "signup",
-    //   element: <Signup />,
-    // },
+    {
+      path: "signin",
+      element: <SignInPage />,
+    },
+    {
+      path: "signup",
+      element: <SignUpPage />,
+    },
   ]);
 
   return <RouterProvider router={router} />;
