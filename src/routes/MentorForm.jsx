@@ -20,6 +20,7 @@ import { postMentorData } from "../data/postData";
 import { toast } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
+import AddIcon from '@mui/icons-material/Add';
 
 function MentorForm() {
   const {
@@ -104,7 +105,7 @@ function MentorForm() {
           <Grid
             container
             sx={{
-              width: { sm: "80%", lg: "70%" },
+              width: { xs: "70%", lg: "70%" },
             }}
             spacing={{ xs: 4, sm: 2 }}
           >
@@ -305,9 +306,9 @@ function MentorForm() {
           <Grid
             container
             sx={{
-              width: { sm: "80%", lg: "70%" },
+              width: { sm: "60%", lg: "70%" },
             }}
-            spacing={{ xs: 4, sm: 2 }}
+            spacing={{ xs: 2, sm: 2 }}
           >
             <Grid item xs={12}>
               <Typography sx={{ mt: 5, fontWeight: "medium" }}>
@@ -409,11 +410,15 @@ function MentorForm() {
             alignItems="center"
             spacing={{ xs: 4, sm: 2 }}
             sx={{
-              width: { sm: "80%", lg: "70%" },
+              width: { sm: "60%", lg: "70%" },
             }}
           >
             {publicationFields.map((field, index) => (
-              <Grid item xs={12} key={field.id} sx={{ ml: { lg: 10, sm: 0 } }}>
+              <Grid item xs={12} key={field.id}  border={1}
+              borderColor={"#dddddd"}
+              borderRadius={2}
+              pb={2}
+              pr={2}>
                 <Grid
                   container
                   spacing={2}
@@ -441,14 +446,27 @@ function MentorForm() {
                       label="DOI"
                     />
                   </Grid>
-                  <Grid item xs={12} sm={12} md={1}>
-                    <IconButton
+
+                  <Grid item xs={11} sm={5} md={3}>
+                    <TextField
+                      fullWidth
+                      {...register(`publications[${index}].year`)}
+                      type="date"
+                      InputLabelProps={{ shrink: true }}
+                      label="Year"
+                    />
+                  </Grid>
+                  
+                </Grid>
+                <Grid item xs={12} sm={12} md={1} mt={2}>
+                    <Button
+                      startIcon={<DeleteIcon />}
+                      variant="contained"
                       aria-label="delete"
                       onClick={() => removePublication(index)}
                     >
-                      <DeleteIcon />
-                    </IconButton>
-                  </Grid>
+                      Remove
+                  </Button>
                 </Grid>
               </Grid>
             ))}
@@ -460,6 +478,7 @@ function MentorForm() {
               justifyContent="center"
             >
               <Button
+                startIcon={<AddIcon />}
                 variant="contained"
                 color="primary"
                 onClick={() =>
@@ -477,9 +496,9 @@ function MentorForm() {
           <Grid
             container
             alignItems="center"
-            spacing={{ xs: 4, sm: 2 }}
+            // spacing={{ xs: 4, sm: 1 }}
             sx={{
-              width: { sm: "80%", lg: "70%" },
+              width: { sm: "60%", lg: "80%" },
             }}
           >
             {experienceFields.map((field, index) => (
@@ -511,7 +530,7 @@ function MentorForm() {
                       label="Company Name"
                     />
                   </Grid>
-                  <Grid item xs={6} sm={3} md={4}>
+                  <Grid item xs={6} sm={3} md={6}>
                     <TextField
                       fullWidth
                       {...register(
@@ -522,7 +541,7 @@ function MentorForm() {
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
-                  <Grid item xs={6} sm={3} md={4}>
+                  <Grid item xs={6} sm={3} md={6}>
                     <TextField
                       fullWidth
                       {...register(`professionalExperiences[${index}].endDate`)}
@@ -531,8 +550,8 @@ function MentorForm() {
                       InputLabelProps={{ shrink: true }}
                     />
                   </Grid>
-                  
-                  <Grid item xs={12} sm={6} md={11}>
+
+                  <Grid item xs={12} sm={6} md={12}>
                     <TextField
                       fullWidth
                       {...register(
@@ -543,13 +562,34 @@ function MentorForm() {
                       rows={4}
                     />
                   </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      {...register(
+                        `professionalExperiences[${index}].awardsRecognition`,
+                      )}
+                      label="Awards / Recognition"
+                    />
+                  </Grid>
+
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      fullWidth
+                      {...register(
+                        `professionalExperiences[${index}].numberOfPromotions`,
+                      )}
+                      label="Number of Promotions"
+                    />
+                  </Grid>
                   <Grid item xs={12} sm={1} md={1}>
-                    <IconButton
+                    <Button
+                    startIcon={<DeleteIcon />}
+                    variant="contained"
                       aria-label="delete"
                       onClick={() => removeExperience(index)}
                     >
-                      <DeleteIcon />
-                    </IconButton>
+                      Remove
+                    </Button>
                   </Grid>
                 </Grid>
               </Grid>
@@ -564,6 +604,7 @@ function MentorForm() {
               <Button
                 variant="contained"
                 color="primary"
+                startIcon={<AddIcon />}
                 onClick={() =>
                   appendExperience({
                     title: "",

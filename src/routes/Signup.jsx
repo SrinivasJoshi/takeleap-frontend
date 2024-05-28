@@ -1,4 +1,4 @@
-import { SignUp } from "@clerk/clerk-react";
+import { SignUp, useSignUp } from "@clerk/clerk-react";
 import { Box } from "@mui/material";
 
 export default function SignUpPage() {
