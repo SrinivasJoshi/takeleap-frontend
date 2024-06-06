@@ -5,7 +5,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/mentorForm");
+    navigate("/signup");
   }, [navigate]);
 
   return <div>HomePage</div>;

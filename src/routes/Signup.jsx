@@ -9,7 +9,7 @@ export default function SignUpPage() {
       alignItems={"center"}
       height={"97vh"}
     >
-      <SignUp path="/signup" forceRedirectUrl={"/mentorForm"} />
+      <SignUp path="/signup" forceRedirectUrl={"/personalMentorForm"} unsafeMetadata={{'isMentor':true}} />
     </Box>
   );
 }

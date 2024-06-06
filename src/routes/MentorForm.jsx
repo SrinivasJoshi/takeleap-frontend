@@ -19,8 +19,7 @@ import {
 import { postMentorData } from "../data/postData";
 import { toast } from "react-toastify";
 import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
-import AddIcon from '@mui/icons-material/Add';
+import AddIcon from "@mui/icons-material/Add";
 
 function MentorForm() {
   const {
@@ -109,7 +108,7 @@ function MentorForm() {
             }}
             spacing={{ xs: 4, sm: 2 }}
           >
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 {...register("name", { required: "Name is required" })}
@@ -118,7 +117,7 @@ function MentorForm() {
                 helperText={errors.name?.message}
               />
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <FormControl fullWidth error={!!errors.gender}>
                 <InputLabel>Gender</InputLabel>
                 <Controller
@@ -142,7 +141,7 @@ function MentorForm() {
               </FormControl>
             </Grid>
 
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={12}>
               <TextField
                 fullWidth
                 {...register("currentLocation", {
@@ -414,11 +413,16 @@ function MentorForm() {
             }}
           >
             {publicationFields.map((field, index) => (
-              <Grid item xs={12} key={field.id}  border={1}
-              borderColor={"#dddddd"}
-              borderRadius={2}
-              pb={2}
-              pr={2}>
+              <Grid
+                item
+                xs={12}
+                key={field.id}
+                border={1}
+                borderColor={"#dddddd"}
+                borderRadius={2}
+                pb={2}
+                pr={2}
+              >
                 <Grid
                   container
                   spacing={2}
@@ -456,16 +460,15 @@ function MentorForm() {
                       label="Year"
                     />
                   </Grid>
-                  
                 </Grid>
                 <Grid item xs={12} sm={12} md={1} mt={2}>
-                    <Button
-                      startIcon={<DeleteIcon />}
-                      variant="contained"
-                      aria-label="delete"
-                      onClick={() => removePublication(index)}
-                    >
-                      Remove
+                  <Button
+                    startIcon={<DeleteIcon />}
+                    variant="contained"
+                    aria-label="delete"
+                    onClick={() => removePublication(index)}
+                  >
+                    Remove
                   </Button>
                 </Grid>
               </Grid>
@@ -583,8 +586,8 @@ function MentorForm() {
                   </Grid>
                   <Grid item xs={12} sm={1} md={1}>
                     <Button
-                    startIcon={<DeleteIcon />}
-                    variant="contained"
+                      startIcon={<DeleteIcon />}
+                      variant="contained"
                       aria-label="delete"
                       onClick={() => removeExperience(index)}
                     >
